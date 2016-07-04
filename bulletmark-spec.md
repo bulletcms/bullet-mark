@@ -7,11 +7,11 @@
 
 - [1. General](#1-general)
 - [2. Layouts](#2-layouts)
-  - [2.1 Paragraphs](#2.1-paragraphs)
-  - [2.2 Sections](#2.2-sections)
-  - [2.2 Headings](#2.3-headings)
+  - [2.1 Paragraphs](#21-paragraphs)
+  - [2.2 Sections](#22-sections)
+  - [2.2 Headings](#23-headings)
 - [3. Text styles](#3-text-styles)
-- [4. Components](#5-components)
+- [4. Components](#4-components)
 
 
 
