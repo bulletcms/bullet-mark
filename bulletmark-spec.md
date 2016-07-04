@@ -30,7 +30,7 @@ Some useful notes:
 Paragraphs and headings are considered to be 1st order elements as they must be separated by at least one blank line. Sections are considered to be 0th order elements as they may compose multiple 1st order elements.
 
 
-#### 2.1 Paragraphs
+### 2.1 Paragraphs
 
 Paragraphs are delimited by at least a single line separation from surrounding content.
 
@@ -44,7 +44,7 @@ I am the third paragraph.
 ```
 
 
-#### 2.2 Sections
+### 2.2 Sections
 
 Sections are delimited by at least a 4 line separation from surrounding content.
 
@@ -62,11 +62,11 @@ This is the beginning of the next section.
 Section delimitations take precedence over paragraphs.
 
 
-#### 2.3 Headings
+### 2.3 Headings
 
 Headings begin with a `#` and are delimited by at least a single line separation from surrounding content. The number of `#`'s determine the level of the heading e.g. `#` would represent an `<h1>` and `######` would represent an `<h6>`. The `#`'s must be separated from their content by a single space.
 
-Bulletmark also gives the option to have headings numbered, in which case the `%` is used instead. Ordered headings display a prefix numbered prefix to its heading text based on its level and ordering on the page. Ordered headings are also not limited to a depth of 6, but subsections beyond 6 should not be used often for the sake of clarity.
+Bulletmark also gives the option to have headings numbered, in which case the `%` is used instead. Ordered headings display a prefix numbered prefix to its heading text based on its level and ordering on the page. Ordered headings are also not limited to a depth of 6, but subsections beyond 6 should not be used often for the sake of clarity. The heading style applied to an ordered heading is equal to the (ordered heading's level + 1). The heading style applied also does not exceed a maximum level of 4 for the sake of legibility.
 
 Unordered headings:
 
