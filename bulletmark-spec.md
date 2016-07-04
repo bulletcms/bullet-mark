@@ -9,7 +9,9 @@
 - [2. Layouts](#2-layouts)
   - [2.1 Paragraphs](#21-paragraphs)
   - [2.2 Sections](#22-sections)
-  - [2.2 Headings](#23-headings)
+  - [2.3 Headings](#23-headings)
+  - [2.4 Lists](#24-lists)
+  - [2.5 Code blocks](#25-code-blocks)
 - [3. Text styles](#3-text-styles)
 - [4. Components](#4-components)
 
@@ -101,6 +103,40 @@ Ordered headings followed by their unordered heading equivalent:
 ### 3.1 Heading
 #### 3.1.1 Heading
 #### 3.1.1.1 Heading
+```
+
+
+### 2.4 Lists
+
+Lists come in the unordered and ordered varieties. Unordered lists prefix each item with a `-`. Ordered lists prefix each item with a `+`.
+
+Lists are a 1st order element. As a result each item in the list must be on the next new line. The list itself must be delimited by a blank line above and below.
+
+```
+- This
+- is
+- an
+- unordered
+- list
+
+- This
+- is
+- yet
+- another
+
++ This
++ list
++ is
++ ordered
+```
+
+
+### 2.5 Code blocks
+
+Code blocks are 0th order elements delimited by `` ``` `` and `` ``` ``.
+
+```
+
 ```
 
 
