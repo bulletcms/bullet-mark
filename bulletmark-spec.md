@@ -162,6 +162,26 @@ But not \~me\~.
 ```
 
 
+### 3.2 Links
+
+Links take the form of `[display text | www.example.com]`.
+
+```
+This is a link to [Google | www.google.com].
+```
+
+
+### 3.3 Images
+
+Images take the form of `[! www.example.com]`.
+
+```
+This is an image: [! /material.google.com/static/images/nav_google_logo.svg].
+```
+
+
 
 
 ## 4. Components
+
+Components convert to jsx components.
