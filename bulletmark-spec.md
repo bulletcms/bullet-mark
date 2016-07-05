@@ -140,7 +140,7 @@ Code blocks are 0th order elements delimited by `` ``` `` and `` ``` ``.
 
 ````
 ```
-This will be rendered inside <pre> tags.
+This will be rendered inside pre tags.
 ```
 ````
 
