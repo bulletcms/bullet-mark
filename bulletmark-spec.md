@@ -14,6 +14,8 @@
   - [2.5 Code blocks](#25-code-blocks)
 - [3. Text styles](#3-text-styles)
   - [3.1 Decoration](#31-decoration)
+  - [3.2 Links](#32-links)
+  - [3.3 Images](#33-images)
 - [4. Components](#4-components)
 
 
