@@ -13,6 +13,7 @@
   - [2.4 Lists](#24-lists)
   - [2.5 Code blocks](#25-code-blocks)
 - [3. Text styles](#3-text-styles)
+  - [3.1 Decoration](#31-decoration)
 - [4. Components](#4-components)
 
 
@@ -68,7 +69,7 @@ Section delimitations take precedence over paragraphs.
 
 Headings begin with a `#` and are delimited by at least a single line separation from surrounding content. The number of `#`'s determine the level of the heading e.g. `#` would represent an `<h1>` and `######` would represent an `<h6>`. The `#`'s must be separated from their content by a single space.
 
-Bulletmark also gives the option to have headings numbered, in which case the `%` is used instead. Ordered headings display a prefix numbered prefix to its heading text based on its level and ordering on the page. Ordered headings are also not limited to a depth of 6, but subsections beyond 6 should not be used often for the sake of clarity. The heading style applied to an ordered heading is equal to the (ordered heading's level + 1). The heading style applied also does not exceed a maximum level of 4 for the sake of legibility.
+Bulletmark also gives the option to have headings numbered, in which case the `%` is used instead. Ordered headings display a prefix numbered prefix to its heading text based on its level and ordering on the page. Ordered headings are also not limited to a depth of 6, but subsections beyond 6 should not be used often for the sake of clarity. The heading style applied to an ordered heading is equal to the (ordered heading's level + 1). The heading style applied also does not exceed a maximum level of 5 for the sake of legibility.
 
 Unordered headings:
 
@@ -92,6 +93,7 @@ Ordered headings followed by their unordered heading equivalent:
 %% Heading
 %%% Heading
 %%%% Heading
+%%%%% Heading
 ```
 
 ```
@@ -102,7 +104,8 @@ Ordered headings followed by their unordered heading equivalent:
 ## 3. Heading
 ### 3.1 Heading
 #### 3.1.1 Heading
-#### 3.1.1.1 Heading
+##### 3.1.1.1 Heading
+##### 3.1.1.1.1 Heading
 ```
 
 
@@ -135,14 +138,30 @@ Lists are a 1st order element. As a result each item in the list must be on the 
 
 Code blocks are 0th order elements delimited by `` ``` `` and `` ``` ``.
 
+````
 ```
-
+This will be rendered inside <pre> tags.
 ```
+````
 
 
 
 
 ## 3. Text styles
+
+### 3.1 Decoration
+
+Text may be underlined, italicized, and emboldened.
+
+Respectively, text with these appropriate styles should be delimited by `_`, `~`, and `*`.
+
+These characters can also be escaped using a `\`.
+
+```
+I am _underlined_, ~italicized~, and *emboldened*.
+
+But not \~me\~.
+```
 
 
 
