@@ -136,13 +136,11 @@ Lists are a 1st order element. As a result each item in the list must be on the 
 
 ### 2.5 Code blocks
 
-Code blocks are 0th order elements delimited by `` ``` `` and `` ``` ``.
+Code blocks are 0th order elements delimited by triple `` ` ``'s.
 
-````
 ```
-This will be rendered inside pre tags.
+Such as this one.
 ```
-````
 
 
 
