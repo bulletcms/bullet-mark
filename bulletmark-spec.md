@@ -150,7 +150,7 @@ Such as this one.
 Images take the form of `![www.example.com]`.
 
 ```
-This is an image: [! material.google.com/static/images/nav_google_logo.svg].
+This is an image: ![material.google.com/static/images/nav_google_logo.svg].
 ```
 
 
