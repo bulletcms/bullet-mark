@@ -187,3 +187,9 @@ This is an image: [! material.google.com/static/images/nav_google_logo.svg].
 ## 4. Components
 
 Components convert to jsx components.
+
+The syntax:
+
+```
+{ ComponentName | prop1=val1 prop2=val2 | {ChildComponentName | | }}
+```
