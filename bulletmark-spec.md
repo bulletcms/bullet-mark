@@ -12,10 +12,10 @@
   - [2.3 Headings](#23-headings)
   - [2.4 Lists](#24-lists)
   - [2.5 Code blocks](#25-code-blocks)
-- [3. Text styles](#3-text-styles)
+  - [2.6 Images](#26-images)
+- [3.Text styles](#3-text-styles)
   - [3.1 Decoration](#31-decoration)
   - [3.2 Links](#32-links)
-  - [3.3 Images](#33-images)
 - [4. Components](#4-components)
 
 
@@ -145,6 +145,15 @@ Such as this one.
 ```
 
 
+### 2.6 Images
+
+Images take the form of `![www.example.com]`.
+
+```
+This is an image: [! material.google.com/static/images/nav_google_logo.svg].
+```
+
+
 
 
 ## 3. Text styles
@@ -170,15 +179,6 @@ Links take the form of `[display text | www.example.com]`.
 
 ```
 This is a link to [Google | www.google.com].
-```
-
-
-### 3.3 Images
-
-Images take the form of `[! www.example.com]`.
-
-```
-This is an image: [! material.google.com/static/images/nav_google_logo.svg].
 ```
 
 
