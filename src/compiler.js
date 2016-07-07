@@ -174,7 +174,15 @@ let lexer = (bulletmark)=>{
 
 let parser = (tokens)=>{
   let bulletjson = [];
-  for(let token of tokens){
-
+  while(tokens.length > 0){
+    let k = tokens.pop(0);
+    switch(k){
+      case TOKEN.sectionBegin:
+        let component = 'section';
+        let children = 'none';
+        // must have some recursive element here
+        let componentjson = {component};
+        break;
+    }
   }
 };
