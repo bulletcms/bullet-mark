@@ -173,6 +173,7 @@ let lexer = (bulletmark)=>{
 };
 
 let parser = (tokens)=>{
+  let bulletjson = [];
   for(let token of tokens){
 
   }
