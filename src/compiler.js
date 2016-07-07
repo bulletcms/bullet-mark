@@ -173,21 +173,14 @@ let lexer = (bulletmark)=>{
   }
 };
 
-let parser = (tokens, endTrigger=TOKEN.nullToken, type=TOKEN.nullToken)=>{
+let parser = (tokens, type=TOKEN.nullToken, endTrigger=TOKEN.nullToken)=>{
   if(tokens.length < 1){
     return [];
   }
-  if(endTrigger == TOKEN.nullToken && type == TOKEN.nullToken){
+  if(type == TOKEN.nullToken){
     let bulletjson = [];
     while(tokens.length > 0){
-      let k = tokens.pop(0);
-      switch(k){
-        case TOKEN.sectionBegin:
-        case TOKEN.paragraphBegin:
-        case TOKEN.styleBegin:
-        case TOKEN.childrenBegin:
-          break;
-      }
+      bulletjson = bulletjson.concat(parser(tokens, tokens.pop(0)));
     }
   } else if(endTrigger != TOKEN.nullToken) {
     let bulletjson = [];
