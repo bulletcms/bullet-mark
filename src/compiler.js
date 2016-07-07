@@ -21,7 +21,8 @@ const TOKEN = {
   propsBegin       : Symbol('PROPS_BEGIN'),
   propsEnd         : Symbol('PROPS_END'),
   childrenBegin    : Symbol('CHILDREN_BEGIN'),
-  childrenEnd      : Symbol('CHILDREN_END')
+  childrenEnd      : Symbol('CHILDREN_END'),
+  nullToken        : Symbol('NULL_TOKEN')
 };
 
 let multiIndexOf = (string, substring) => {
@@ -172,17 +173,15 @@ let lexer = (bulletmark)=>{
   }
 };
 
-let parser = (tokens)=>{
-  let bulletjson = [];
-  while(tokens.length > 0){
-    let k = tokens.pop(0);
-    switch(k){
-      case TOKEN.sectionBegin:
-        let component = 'section';
-        let children = 'none';
-        // must have some recursive element here
-        let componentjson = {component};
-        break;
-    }
+let parser = (tokens, endTrigger=TOKEN.nullToken, type=TOKEN.nullToken)=>{
+  if(tokens.length < 1){
+    return [];
+  }
+  if(endTrigger == TOKEN.nullToken && type == TOKEN.nullToken){
+    let bulletjson = [];
+  } else if(endTrigger != TOKEN.nullToken) {
+    let bulletjson = [];
+
+  } else {
   }
 };
