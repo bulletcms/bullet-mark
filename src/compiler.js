@@ -179,6 +179,16 @@ let parser = (tokens, endTrigger=TOKEN.nullToken, type=TOKEN.nullToken)=>{
   }
   if(endTrigger == TOKEN.nullToken && type == TOKEN.nullToken){
     let bulletjson = [];
+    while(tokens.length > 0){
+      let k = tokens.pop(0);
+      switch(k){
+        case TOKEN.sectionBegin:
+        case TOKEN.paragraphBegin:
+        case TOKEN.styleBegin:
+        case TOKEN.childrenBegin:
+          break;
+      }
+    }
   } else if(endTrigger != TOKEN.nullToken) {
     let bulletjson = [];
 
