@@ -1,5 +1,4 @@
 const TOKEN = {
-  plaintext        : Symbol('PLAINTEXT'),
   sectionBegin     : Symbol('SECTION_BEGIN'),
   sectionEnd       : Symbol('SECTION_END'),
   codeBlock        : Symbol('CODE_BLOCK'),
@@ -50,25 +49,25 @@ let blockLexer = (bulletmark)=>{
       let level = block.indexOf(' ');
       tokenOutput.push(level);
       tokenOutput.push(block.substring(level+1));
-    } else if(block.search(/^%+ [\s\S]*/) > -1){
-      // ordered header
-      // number: level, text
-      tokenOutput.push(TOKEN.headingOrdered);
-      let level = block.indexOf(' ');
-      tokenOutput.push(level);
-      tokenOutput.push(block.substring(level+1));
-    } else if(block.search(/^- [\s\S]*/) > -1){
-      // list
-      // text, text, ...
-      tokenOutput.push(TOKEN.listBegin);
-      tokenOutput = tokenOutput.concat(block.split(/\s*- /).slice(1));
-      tokenOutput.push(TOKEN.listEnd);
-    } else if(block.search(/^\+ [\s\S]*/) > -1){
-      // ordered list
-      // text, text, ...
-      tokenOutput.push(TOKEN.listBegin);
-      tokenOutput = tokenOutput.concat(block.split(/\s*\+ /).slice(1));
-      tokenOutput.push(TOKEN.listEnd);
+    // } else if(block.search(/^%+ [\s\S]*/) > -1){
+    //   // ordered header
+    //   // number: level, text
+    //   tokenOutput.push(TOKEN.headingOrdered);
+    //   let level = block.indexOf(' ');
+    //   tokenOutput.push(level);
+    //   tokenOutput.push(block.substring(level+1));
+    // } else if(block.search(/^- [\s\S]*/) > -1){
+    //   // list
+    //   // text, text, ...
+    //   tokenOutput.push(TOKEN.listBegin);
+    //   tokenOutput = tokenOutput.concat(block.split(/\s*- /).slice(1));
+    //   tokenOutput.push(TOKEN.listEnd);
+    // } else if(block.search(/^\+ [\s\S]*/) > -1){
+    //   // ordered list
+    //   // text, text, ...
+    //   tokenOutput.push(TOKEN.listBegin);
+    //   tokenOutput = tokenOutput.concat(block.split(/\s*\+ /).slice(1));
+    //   tokenOutput.push(TOKEN.listEnd);
     } else if(block.trim().search(/^!\[[\s\S]*\]$/) > -1){
       // image
       // url
@@ -91,12 +90,12 @@ let blockLexer = (bulletmark)=>{
           throw new LexerException(`Missing second pipe for ${block.trim()}`);
         }
         if(indexSecondPipe > 0){
-          props = k.substring(0, indexSecondPipe).trim().split(/\s+/).map((propval)=>{
+          props = k.substring(0, indexSecondPipe).trim().split(/&&/).map((propval)=>{
             let indexOfEquals = propval.indexOf('=');
             if(indexOfEquals < 0){
               throw new LexerException(`Property ${propval} has no value`);
             }
-            return [propval.substring(0, indexOfEquals), propval.substring(indexOfEquals+1)];
+            return [propval.substring(0, indexOfEquals).trim(), propval.substring(indexOfEquals+1).trim()];
           });
         }
         k = k.substring(indexSecondPipe+1).trim();
