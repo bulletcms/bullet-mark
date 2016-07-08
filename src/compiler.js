@@ -50,25 +50,25 @@ let blockLexer = (bulletmark)=>{
       let level = block.indexOf(' ');
       tokenOutput.push(level);
       tokenOutput.push(block.substring(level+1));
-    // } else if(block.search(/^%+ [\s\S]*/) > -1){
-    //   // ordered header
-    //   // number: level, text
-    //   tokenOutput.push(TOKEN.headingOrdered);
-    //   let level = block.indexOf(' ');
-    //   tokenOutput.push(level);
-    //   tokenOutput.push(block.substring(level+1));
-    // } else if(block.search(/^- [\s\S]*/) > -1){
-    //   // list
-    //   // text, text, ...
-    //   tokenOutput.push(TOKEN.listBegin);
-    //   tokenOutput = tokenOutput.concat(block.split(/\s*- /).slice(1));
-    //   tokenOutput.push(TOKEN.listEnd);
-    // } else if(block.search(/^\+ [\s\S]*/) > -1){
-    //   // ordered list
-    //   // text, text, ...
-    //   tokenOutput.push(TOKEN.listBegin);
-    //   tokenOutput = tokenOutput.concat(block.split(/\s*\+ /).slice(1));
-    //   tokenOutput.push(TOKEN.listEnd);
+    } else if(block.search(/^%+ [\s\S]*/) > -1){
+      // ordered header
+      // number: level, text
+      tokenOutput.push(TOKEN.headingOrdered);
+      let level = block.indexOf(' ');
+      tokenOutput.push(level);
+      tokenOutput.push(block.substring(level+1));
+    } else if(block.search(/^- [\s\S]*/) > -1){
+      // list
+      // text, text, ...
+      tokenOutput.push(TOKEN.listBegin);
+      tokenOutput = tokenOutput.concat(block.split(/\s*- /).slice(1));
+      tokenOutput.push(TOKEN.listEnd);
+    } else if(block.search(/^\+ [\s\S]*/) > -1){
+      // ordered list
+      // text, text, ...
+      tokenOutput.push(TOKEN.listBegin);
+      tokenOutput = tokenOutput.concat(block.split(/\s*\+ /).slice(1));
+      tokenOutput.push(TOKEN.listEnd);
     } else if(block.trim().search(/^!\[[\s\S]*\]$/) > -1){
       // image
       // url
@@ -180,11 +180,69 @@ let parser = (tokens, type=TOKEN.nullToken, endTrigger=TOKEN.nullToken)=>{
   if(type == TOKEN.nullToken){
     let bulletjson = [];
     while(tokens.length > 0){
-      bulletjson = bulletjson.concat(parser(tokens, tokens.pop(0)));
+      bulletjson = bulletjson.push(parser(tokens, tokens.pop(0)));
     }
-  } else if(endTrigger != TOKEN.nullToken) {
-    let bulletjson = [];
-
+  } else if(endTrigger == TOKEN.nullToken) {
+    switch (type) {
+      case TOKEN.sectionBegin:
+        return {
+          component: 'section',
+          children: parser(tokens, type, TOKEN.sectionEnd)
+        };
+      case TOKEN.paragraphBegin:
+        return {
+          component: 'p',
+          children: parser(tokens, type, TOKEN.paragraphEnd)
+        };
+      case TOKEN.styleBegin:
+        let component = '';
+        let props = {};
+        switch(tokens.pop(0)){
+          case TOKEN.styleBold:
+            component = 'strong';
+            break;
+          case TOKEN.styleItalics:
+            component = 'em';
+            break;
+          case TOKEN.styleUnderline:
+            component = 'span';
+            props = {
+              style: {
+                text-decoration: 'underline'
+              }
+            };
+            break;
+        }
+        return {
+          component, props,
+          children: parser(tokens, type, TOKEN.styleEnd)
+        };
+      case TOKEN.listBegin:
+        return {
+          component: 'ul',
+          children: parser(tokens, type, TOKEN.listEnd).map((item)=>{
+            return {
+              component: 'li',
+              children: item
+            };
+          })
+        };
+      case TOKEN.listOrderedBegin:
+      return {
+        component: 'ol',
+        children: parser(tokens, type, TOKEN.listEnd).map((item)=>{
+          return {
+            component: 'li',
+            children: item
+          };
+        })
+      };
+      case TOKEN.childrenBegin:
+        return parser(tokens, type, TOKEN.childrenEnd);
+      default:
+        return type;
+    }
   } else {
+    let bulletjson = [];
   }
 };
