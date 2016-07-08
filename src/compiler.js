@@ -182,6 +182,7 @@ let parser = (tokens, type=TOKEN.nullToken, endTrigger=TOKEN.nullToken)=>{
     while(tokens.length > 0){
       bulletjson = bulletjson.push(parser(tokens, tokens.pop(0)));
     }
+    return bulletjson;
   } else if(endTrigger == TOKEN.nullToken) {
     switch (type) {
       case TOKEN.sectionBegin:
@@ -241,8 +242,16 @@ let parser = (tokens, type=TOKEN.nullToken, endTrigger=TOKEN.nullToken)=>{
         return parser(tokens, type, TOKEN.childrenEnd);
       default:
         return type;
+      case TOKEN.heading:
+      case TOKEN.headingOrdered:
+      case TOKEN.image:
+      case TOKEN.componentBegin:
     }
   } else {
     let bulletjson = [];
+    while(tokens[0] != endTrigger && tokens.length > 0){
+      bulletjson = bulletjson.push(parser(tokens, tokens.pop(0)));
+    }
+    return bulletjson;
   }
 };
