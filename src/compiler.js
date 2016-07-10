@@ -11,6 +11,7 @@ const TOKEN = {
   listOrderedBegin : Symbol('LIST_ORDERED_BEGIN'),
   listOrderedEnd   : Symbol('LIST_ORDERED_END'),
   image            : Symbol('IMAGE'),
+  link             : Symbol('LINK'),
   styleBegin       : Symbol('STYLE_BEGIN'),
   styleEnd         : Symbol('STYLE_END'),
   styleBold        : Symbol('STYLE_BOLD'),
@@ -112,7 +113,7 @@ let blockLexer = (bulletmark)=>{
       // paragraph
       // text, (... styled text), ...
       tokenOutput.push(TOKEN.paragraphBegin);
-      let styleIndicies = multiIndexOf(block, '*').concat(multiIndexOf(block, '~')).concat(multiIndexOf(block, '_')).sort((a,b)=>{return a-b});
+      let styleIndicies = multiIndexOf(block, '*').concat(multiIndexOf(block, '~')).concat(multiIndexOf(block, '_')).concat(multiIndexOf(block, '[')).sort((a,b)=>{return a-b});
       let lastIndex = 0;
       let boldTrigger = false;
       let italicsTrigger = false;
@@ -153,6 +154,10 @@ let blockLexer = (bulletmark)=>{
               tokenOutput.push(TOKEN.styleUnderline);
             }
             break;
+          case '[':
+            // links
+            tokenOutput.push(TOKEN.link);
+            break;
         }
       }
       if(block.length - lastIndex > 1){
@@ -172,6 +177,8 @@ let lexer = (bulletmark)=>{
     tokenOutput.push(TOKEN.sectionEnd);
   }
 };
+
+let orderedHeaderState = [];
 
 let parser = (tokens, type=TOKEN.nullToken, endTrigger=TOKEN.nullToken)=>{
   if(tokens.length < 1){
@@ -229,23 +236,41 @@ let parser = (tokens, type=TOKEN.nullToken, endTrigger=TOKEN.nullToken)=>{
           })
         };
       case TOKEN.listOrderedBegin:
-      return {
-        component: 'ol',
-        children: parser(tokens, type, TOKEN.listEnd).map((item)=>{
-          return {
-            component: 'li',
-            children: item
-          };
-        })
-      };
+        return {
+          component: 'ol',
+          children: parser(tokens, type, TOKEN.listEnd).map((item)=>{
+            return {
+              component: 'li',
+              children: item
+            };
+          })
+        };
       case TOKEN.childrenBegin:
         return parser(tokens, type, TOKEN.childrenEnd);
-      default:
-        return type;
       case TOKEN.heading:
+        return {
+          component: 'h'+tokens.pop(0),
+          children: parser(tokens, tokens.pop(0))
+        };
       case TOKEN.headingOrdered:
+        let level = tokens.pop(0);
+        let k = Math.min(level+1, 5);
+        if(orderedHeaderState.length < level){
+          while(orderedHeaderState.length < level){
+            orderedHeaderState.push(1);
+          }
+        } else {
+          orderedHeaderState.length = level;
+          orderedHeaderState[level] += 1;
+        }
+        return {
+          component: 'h'+k,
+          children: orderedHeaderState.join('.') parser(tokens, tokens.pop(0))
+        };
       case TOKEN.image:
       case TOKEN.componentBegin:
+      default:
+        return type;
     }
   } else {
     let bulletjson = [];
