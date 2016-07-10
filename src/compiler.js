@@ -108,7 +108,18 @@ let blockLexer = (bulletmark)=>{
         name = k.trim();
       }
 
-      if
+      tokenOutput.push(TOKEN.componentBegin);
+      if(props != 'none'){
+        tokenOutput.push(TOKEN.propsBegin);
+        tokenOutput = tokenOutput.concat(props.reduce((previous, current)=>{return previous.concat(current);}, []));
+        tokenOutput.push(TOKEN.propsEnd);
+      }
+      if(children != 'none'){
+        tokenOutput.push(TOKEN.childrenBegin);
+        tokenOutput = tokenOutput.concat(children);
+        tokenOutput.push(TOKEN.childrenEnd);
+      }
+      tokenOutput.push(TOKEN.componentEnd);
     } else {
       // paragraph
       // text, (... styled text), ...
@@ -268,7 +279,14 @@ let parser = (tokens, type=TOKEN.nullToken, endTrigger=TOKEN.nullToken)=>{
           children: orderedHeaderState.join('.') parser(tokens, tokens.pop(0))
         };
       case TOKEN.image:
+        return {
+          component: 'img',
+          props: {
+            src: tokens.pop(0)
+          }
+        };
       case TOKEN.componentBegin:
+
       default:
         return type;
     }
