@@ -256,8 +256,6 @@ let parser = (tokens, type=TOKEN.nullToken, endTrigger=TOKEN.nullToken)=>{
             };
           })
         };
-      case TOKEN.childrenBegin:
-        return parser(tokens, type, TOKEN.childrenEnd);
       case TOKEN.heading:
         return {
           component: 'h'+tokens.pop(0),
@@ -286,7 +284,24 @@ let parser = (tokens, type=TOKEN.nullToken, endTrigger=TOKEN.nullToken)=>{
           }
         };
       case TOKEN.componentBegin:
+        let component = tokens.pop(0);
+        let props = {};
+        let children = [];
+        let k = tokens.pop(0);
 
+        if(k == TOKEN.propsBegin){
+          k = tokens.pop(0);
+          while(k != TOKEN.propsEnd){
+            props[k] = tokens.pop(0);
+            k = tokens.pop(0);
+          }
+          k = tokens.pop(0);
+        }
+        if(k == TOKEN.childrenBegin){
+           children = parser(tokens, k, TOKEN.childrenEnd);
+           k = tokens.pop(0);
+        }
+        return {component, props, children};
       default:
         return type;
     }
