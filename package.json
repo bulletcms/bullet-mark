@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/bulletcms/bullet-mark/issues"
   },
-  "homepage": "https://github.com/bulletcms/bullet-mark#readme"
+  "homepage": "https://github.com/bulletcms/bullet-mark#readme",
+  "dependencies": {
+    "remarkable": "^1.6.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.3.1"
+  }
 }

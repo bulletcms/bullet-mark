@@ -1,3 +1,3 @@
 # bullet-mark
 
-a featureful markup language
+a featureful component markup language extension of markdown
