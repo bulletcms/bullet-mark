@@ -2,6 +2,8 @@ const TOKEN = {
   componentBegin: Symbol('COMPONENT_BEGIN'),
   componentEnd  : Symbol('COMPONENT_END'),
   pipe          : Symbol('PIPE'),
+  semicolon     : Symbol('SEMICOLON'),
+  equals        : Symbol('EQUALS'),
   nullToken     : Symbol('NULL_TOKEN')
 };
 
@@ -13,19 +15,34 @@ class LexerException {
   }
 }
 
-const syntax = ['{', '}', '|'];
-
+/**
+ * find next symbol in a given string
+ * @param  {Array[String]} targets
+ * @param  {String} pool
+ * @return {Tuple(index, type)}
+ */
 const findNext = (targets, pool)=>{
-  for(let i = 0; i < pool.length; i++){
-    const k = syntax.indexOf(pool[i]);
-    if(k > -1){
-      return [i, k];
+  let firstSymbolIndex = null;
+  let firstSymbol = null;
+  for(let i = 0; i < syntax.length; i++){
+    const k = pool.indexOf(targets[i]);
+    if(k > -1 && (firstSymbolIndex === null || k < firstSymbolIndex)){
+      firstSymbolIndex = k;
+      firstSymbol = i;
     }
   }
-  return [-1, -1];
+
+  if(firstSymbolIndex !== null){
+    return [firstSymbolIndex, firstSymbol];
+  } else {
+    return [-1, -1];
+  }
 }
 
-const lexer = (bulletmark)=>{
+const lexer = (bulletmark, syntax, syntaxTokens)=>{
+  if(syntax.length !== syntaxTokens.length){
+    throw new LexerException('syntax and syntaxTokens length not equal');
+  }
   const tokens = [];
   let k = bulletmark.trim();
   while(k.length > 0){
@@ -35,21 +52,14 @@ const lexer = (bulletmark)=>{
         tokens.push(k.substring(0, index).trim());
         k = k.substring(index);
       }
-      switch(type){
-        case 0:
-          tokens.push(TOKEN.componentBegin);
-          break;
-        case 1:
-          tokens.push(TOKEN.componentEnd);
-          break;
-        case 2:
-          tokens.push(TOKEN.pipe);
-        default:
-          throw new LexerException('unknown type of syntax: ' + syntax[type]);
+      if(type < syntaxTokens.length){
+        tokens.push(syntaxTokens[type]);
+      } else {
+        throw new LexerException('unknown type of syntax: ' + syntax[type]);
       }
-      k = k.substring(1);
+      k = k.substring(syntax[type].length).trim();
     } else {
-      tokens.push(k);
+      tokens.push(k.trim());
       k = '';
     }
   }
@@ -57,6 +67,13 @@ const lexer = (bulletmark)=>{
 };
 
 
-const parser = (tokens)=>{
 
+
+const syntax = ['{', '}', '||', ';;', '='];
+const syntaxTokens = [TOKEN.componentBegin, TOKEN.componentEnd, TOKEN.pipe, TOKEN.semicolon, TOKEN.equals];
+
+const parser = (tokens)=>{
+  lexer(testbulletmark, syntax, syntaxTokens);
 };
+
+export {parser};

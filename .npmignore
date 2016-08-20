@@ -1,0 +1,6 @@
+*
+!package.json
+!.npmignore
+!README.md
+!lib/index.js
+!index.js
