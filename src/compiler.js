@@ -139,6 +139,9 @@ const componentParser = (tokens)=>{
           }
           k = tokens.shift();
         }
+        if(componentObject.children.length < 2){
+          componentObject.children = componentObject.children[0];
+        }
       }
     } else {
       throw new ParserException(`component ${componentObject.component} not terminated with close brace`);
@@ -160,6 +163,9 @@ const parser = (bulletmark)=>{
         bulletjson.push(markdownParser(k));
         break;
     }
+  }
+  if(bulletjson.length < 2){
+    return bulletjson[0];
   }
   return bulletjson;
 };
