@@ -10,6 +10,10 @@ const testbulletmark =
 
     this is some markdown
   }
+
+  Some text after.
+
+  Some more text after.
 }
 `;
 
