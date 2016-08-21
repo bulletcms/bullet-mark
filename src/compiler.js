@@ -79,7 +79,9 @@ class ParserException{
 const syntax = ['{', '}', '||', ';;', '='];
 const syntaxTokens = [TOKEN.componentBegin, TOKEN.componentEnd, TOKEN.pipe, TOKEN.semicolon, TOKEN.equals];
 
-// const tokens = lexer(bulletmark, syntax, syntaxTokens);
+const markdownParser = (markdown)=>{
+  return markdown;
+}
 
 const componentParser = (tokens)=>{
   const componentObject = {};
@@ -124,28 +126,27 @@ const componentParser = (tokens)=>{
         k = tokens.shift();
       }
 
-      // difficult logic
-      if(tokens[0] !== TOKEN.componentEnd){
+      k = tokens.shift();
+      if(k !== TOKEN.componentEnd){
         componentObject.children = [];
-        while(tokens[0] !== TOKEN.componentEnd){
-          if(tokens[0] === TOKEN.componentBegin){
-            k = tokens.shift();
+        while(k !== TOKEN.componentEnd){
+          if(k === TOKEN.componentBegin){
             componentObject.children.push(componentParser(tokens));
-          } else { // this must be a string
-
+          } else {
+            componentObject.children.push(markdownParser(k))
           }
+          k = tokens.shift();
         }
-      } else {
-        k = tokens.shift();
       }
     } else {
       throw new ParserException(`component ${componentObject.component} not terminated with close brace`);
     }
   }
-  return(componentObject);
+  return componentObject;
 };
 
-const parser = (tokens)=>{
+const parser = (bulletmark)=>{
+  const tokens = lexer(bulletmark, syntax, syntaxTokens);
   const bulletjson = [];
   while(tokens.length > 0){
     let k = tokens.shift();
@@ -153,8 +154,12 @@ const parser = (tokens)=>{
       case TOKEN.componentBegin:
         bulletjson.push(componentParser(tokens));
         break;
+      default:
+        bulletjson.push(markdownParser(k));
+        break;
     }
   }
+  return bulletjson;
 };
 
 export {parser};

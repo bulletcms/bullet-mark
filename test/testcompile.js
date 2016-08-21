@@ -17,8 +17,8 @@ const testbulletmark =
 }
 `;
 
+console.log(parser(testbulletmark));
 try{
-  console.log('Hello');
 } catch(err){
   console.log(err.type);
   console.log(err.message);
