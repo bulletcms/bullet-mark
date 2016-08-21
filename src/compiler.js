@@ -96,7 +96,6 @@ const componentParser = (tokens)=>{
   k = tokens.shift();
   if(k !== TOKEN.componentEnd){
     if(k === TOKEN.pipe){
-      componentObject.props = {};
       k = tokens.shift();
       while(k !== TOKEN.pipe){
         const key = k;
@@ -121,6 +120,9 @@ const componentParser = (tokens)=>{
         } else if(/^\[.*\]$/.test(value)){
           // if array
           value = JSON.parse(value);
+        }
+        if(!componentObject.props){
+          componentObject.props = {};
         }
         componentObject.props[key] = value;
         k = tokens.shift();

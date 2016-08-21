@@ -14,11 +14,15 @@ const testbulletmark =
   Some text after.
 
   Some more text after.
+
+  { NextChildComponent
+    || secretprop = secret;; ||
+  }
 }
 `;
 
-console.log(parser(testbulletmark));
 try{
+  console.log(JSON.stringify(parser(testbulletmark), null, 2));
 } catch(err){
   console.log(err.type);
   console.log(err.message);
