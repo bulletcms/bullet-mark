@@ -1,4 +1,4 @@
-const {parser} = require('../lib');
+const {parser, interpreter} = require('../lib');
 
 const testbulletmark =
 `
@@ -24,7 +24,7 @@ hello world!
 `;
 
 try{
-  console.log(JSON.stringify(parser(testbulletmark), null, 2));
+  // console.log(JSON.stringify(parser(testbulletmark), null, 2));
 } catch(err){
   console.log(err.type);
   console.log(err.message);

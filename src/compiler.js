@@ -3,8 +3,7 @@ const TOKEN = {
   componentEnd  : Symbol('COMPONENT_END'),
   pipe          : Symbol('PIPE'),
   semicolon     : Symbol('SEMICOLON'),
-  equals        : Symbol('EQUALS'),
-  nullToken     : Symbol('NULL_TOKEN')
+  equals        : Symbol('EQUALS')
 };
 
 
@@ -170,4 +169,4 @@ const parser = (bulletmark)=>{
   return bulletjson;
 };
 
-export {parser};
+export {parser, TOKEN};
