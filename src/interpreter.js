@@ -1,6 +1,8 @@
 import React from 'react';
 import Remarkable from 'remarkable';
 
+import {hashCode} from './utility';
+
 const h = React.createElement;
 const md = new Remarkable('commonmark');
 
