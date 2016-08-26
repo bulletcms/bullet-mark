@@ -1,3 +1,3 @@
-import {parser, interpreter} from './lib/index.js';
+const lib = require('./lib/index.js');
 
-export {parser, interpreter};
+module.exports = {parser, interpreter};
