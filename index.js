@@ -1,3 +1,1 @@
-const lib = require('./lib/index.js');
-
-module.exports = {parser, interpreter};
+module.exports = {parser: require('./lib/index.js').parser, interpreter: require('./lib/index.js').interpreter};
