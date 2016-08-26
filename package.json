@@ -1,8 +1,8 @@
 {
   "name": "bullet-mark",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "a featureful markup language",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-dev": "webpack --watch -d --progress",
@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/bulletcms/bullet-mark#readme",
   "dependencies": {
+    "murmurhash3js": "^3.0.1",
+    "platform": "^1.3.1",
     "react": "^15.3.1",
     "remarkable": "^1.6.2"
   },
@@ -36,6 +38,7 @@
     "json-loader": "^0.5.4",
     "mocha": "^3.0.2",
     "nodemon": "^1.10.2",
+    "react-dom": "^15.3.1",
     "webpack": "^1.13.2",
     "webpack-node-externals": "^1.3.3"
   }
