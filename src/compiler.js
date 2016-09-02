@@ -85,8 +85,8 @@ const markdownParser = (markdown)=>{
 const componentParser = (tokens)=>{
   const componentObject = {};
   let k = tokens.shift();
-  if(typeof k != 'string'){
-    throw new ParserException(`component name of type string must be specified; ${k} is not a string`);
+  if(typeof k !== 'string'){
+    throw new ParserException(`component name of type string must be specified; ${k.toString()} is not a string`);
   }
   if(/\s/.test(k)){
     throw new ParserException(`component name may not contain whitespace; ${k} has whitespace`);
@@ -101,14 +101,17 @@ const componentParser = (tokens)=>{
         const eq = tokens.shift();
         let value = tokens.shift();
         const semi = tokens.shift();
+        if(typeof key !== 'string'){
+          throw new ParserException(`prop key must be a string; ${k.toString()} is not a string`);
+        }
         if(/\s/.test(key)){
           throw new ParserException(`prop name may not contain whitespace; ${k} has whitespace`);
         }
         if(eq !== TOKEN.equals){
-          throw new ParserException(`equals sign missing when defining prop ${key} with ${value}; ${eq} is not an equals sign`);
+          throw new ParserException(`equals sign missing when defining prop ${key} with ${value}; ${eq.toString()} is not an equals sign`);
         }
         if(semi !== TOKEN.semicolon){
-          throw new ParserException(`double semicolon missing when defining prop ${key} with ${value}; ${semi} is not a double semicolon`);
+          throw new ParserException(`double semicolon missing when defining prop ${key} with ${value}; ${semi.toString()} is not a double semicolon`);
         }
         if(!Number.isNaN(Number(value))){
           // if number
@@ -131,12 +134,16 @@ const componentParser = (tokens)=>{
       if(k !== TOKEN.componentEnd){
         componentObject.children = [];
         while(k !== TOKEN.componentEnd){
-          if(k === TOKEN.componentBegin){
-            componentObject.children.push(componentParser(tokens));
+          if(k){
+            if(k === TOKEN.componentBegin){
+              componentObject.children.push(componentParser(tokens));
+            } else {
+              componentObject.children.push(markdownParser(k))
+            }
+            k = tokens.shift();
           } else {
-            componentObject.children.push(markdownParser(k))
+            throw new ParserException(`component ${componentObject.component} not terminated with close brace`);
           }
-          k = tokens.shift();
         }
         if(componentObject.children.length < 2){
           componentObject.children = componentObject.children[0];
