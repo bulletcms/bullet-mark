@@ -1,6 +1,6 @@
 {
   "name": "bullet-mark",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "a featureful markup language",
   "main": "lib/index.js",
   "scripts": {
